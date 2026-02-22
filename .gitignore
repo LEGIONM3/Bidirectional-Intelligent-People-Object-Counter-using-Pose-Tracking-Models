@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Node
+node_modules/
+dist/
+.npm/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Large media files (optional, depending on if you want to push videos or models)
+# We will explicitly ignore local video uploads and temp files
+temp_*
+*.mp4
+*.mkv
+*.avi
+
+# YOLO weights (optional, but they are large)
+# yolov8n.pt
