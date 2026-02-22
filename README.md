@@ -1,71 +1,98 @@
-# FocusTrack Occ-Mon Engine
+# FlowCount AI
 
-FocusTrack Occ-Mon Engine is a comprehensive, AI-powered bidirectional occupancy monitoring system. It leverages advanced computer vision models to detect and track entities (people, animals, objects) as they move through a defined space, accurately counting entries and exits over a dynamically configurable goal line.
+FlowCount AI is an AI-powered bidirectional entry and exit monitoring system built using deep learning and multi-object tracking. It detects, tracks, and counts people or objects crossing a defined boundary in both live and pre-recorded video streams.
+
+The system is designed for workplace safety monitoring, occupancy tracking, and intelligent surveillance applications.
+
+---
+
+## Overview
+
+FlowCount AI processes video input using object detection and tracking models to:
+
+- Detect entities in real-time
+- Assign persistent IDs using tracking
+- Determine movement direction across a defined line
+- Count entries and exits accurately
+- Display live occupancy statistics
+
+The monitoring boundary can be configured dynamically through the web interface.
+
+---
 
 ## Features
 
-- **Object Detection**: Uses YOLOv8 to accurately identify objects in the video feed.
-- **Multi-Object Tracking**: Utilizes ByteTrack to consistently track objects across multiple frames, handling occlusion smoothly.
-- **Dynamic Configuration**: Draw a goal line directly on the video feed to monitor entries and exits in real-time.
-- **Bidirectional Counting**: Accurately determines the direction of movement (entry vs. exit) using vector mathematics and centroid calculations.
-- **Live & Pre-recorded Video**: Supports both live camera feeds and pre-recorded video file uploads.
-- **Interactive UI**: A sleek, responsive dashboard built with React and Tailwind CSS.
+- **Object Detection**: Uses YOLOv8 to detect people and objects in video frames.
+- **Multi-Object Tracking**: Integrates ByteTrack to maintain consistent object identities across frames.
+- **Bidirectional Counting**: Determines entry and exit direction using centroid tracking and vector-based line-crossing logic.
+- **Dynamic Line Configuration**: Allows users to draw a monitoring line directly on the video feed.
+- **Live & Pre-recorded Support**: Works with webcam feeds and uploaded video files.
+- **Interactive Dashboard**: Displays real-time entry, exit, and occupancy statistics.
+
+---
 
 ## Tech Stack
 
-- **Backend**: Python, FastAPI, OpenCV, Ultralytics (YOLOv8), Uvicorn
-- **Frontend**: React (Vite), Tailwind CSS, Lucide React
+### Backend
+- Python
+- FastAPI
+- OpenCV
+- Ultralytics YOLOv8
+- ByteTrack
+- Uvicorn
+
+### Frontend
+- React (Vite)
+- Tailwind CSS
+- Lucide React
+
+---
+
+## System Workflow
+
+1. Capture video frame (live or uploaded).
+2. Perform object detection using YOLOv8.
+3. Track detected objects using ByteTrack.
+4. Compute centroids for each tracked object.
+5. Evaluate object position relative to the configured line.
+6. Update entry or exit count based on movement direction.
+7. Display updated statistics on the frontend dashboard.
+
+Double counting is prevented using object ID state tracking.
+
+---
 
 ## Project Structure
 
-- `/backend`: Contains the FastAPI server, YOLOv8 model initialization, line crossing mathematical logic, and video processing loops.
-- `/frontend`: Contains the Vite + React application, interactive video canvas, and live statistics components.
+backend/
+- FastAPI server
+- YOLO model initialization
+- Tracking pipeline
+- Line crossing logic
+- Video processing loop
+
+frontend/
+- React application
+- Interactive video canvas
+- API integration
+- Live statistics components
+
+---
 
 ## Setup & Installation
 
 ### Prerequisites
 
 - Python 3.8+
-- Node.js & npm 
+- Node.js & npm
+
+---
 
 ### Backend Setup
 
-1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-2. Create and activate a virtual environment (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/Scripts/activate # Windows
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Start the backend Server:
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-   ```
-
-### Frontend Setup
-
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-## Usage
-
-1. Open your browser and navigate to the frontend URL (typically `http://localhost:5173`).
-2. Choose to **Start Live Camera** or **Upload a Video**.
-3. Once the video feed is playing, click and drag on the video player to draw your goal line.
-4. The system will track objects and update the live statistics as they cross the configured line.
+```bash
+cd backend
+python -m venv venv
+source venv/Scripts/activate   # Windows
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
